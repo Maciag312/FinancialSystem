@@ -11,6 +11,10 @@ public class Client {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
+    private String username;
+
+    private String password;
+
     private String name;
 
     private String surname;
@@ -27,6 +31,13 @@ public class Client {
 
     private String email_address;
 
+    private String getClientInfo(){
+        return ""; 
+    }
     @Temporal(TemporalType.DATE)
     Date account_creation_date;
+
+    @OneToOne(mappedBy = "client")
+    private Account account;
+
 }

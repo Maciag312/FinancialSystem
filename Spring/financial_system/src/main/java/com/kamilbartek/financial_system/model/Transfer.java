@@ -1,6 +1,7 @@
 package com.kamilbartek.financial_system.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -9,22 +10,19 @@ public class Transfer {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
-    private String name;
+    private BigDecimal amount;
 
-    private String surname;
+    private String currency;
 
-    private String phone_number;
+    private Account sender;
 
-    private String address;
+    private Account reciever;
 
-    private String country;
-
-    private String identity_card_number;
-
-    private String date_of_birth;
-
-    private String email_address;
 
     @Temporal(TemporalType.DATE)
-    Date account_creation_date;
+    private Date post_date;
+
+
+    @Temporal(TemporalType.DATE)
+    private Date recieve_date;
 }
