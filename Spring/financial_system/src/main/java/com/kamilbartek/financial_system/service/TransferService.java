@@ -18,16 +18,23 @@ public class TransferService {
     @Autowired
     private TransferRepository transferRepository;
 
-    Transfer transfer = new Transfer();
-    Account account = new Account();
-    Boolean send(Account from, Account to, BigDecimal amount, String currency){
+    Transfer transfer;
+    Account account ;
+    public Boolean send(Account from, Account to, BigDecimal amount, String currency)
+    {
+        transfer = new Transfer();
+        account = new Account();
 
-        if((account.getBilance().doubleValue() - amount.doubleValue()) >=  0) // amount.doubleValue()*currency powinno być
+        transfer.setSender(from);
+        transfer.setReciever(to);
+        transfer.setAmount(amount);
+        transfer.setCurrency(currency);
+
+        if(amount.doubleValue() < 0)
+            return false;
+
+        if((from.getBilance().doubleValue() - amount.doubleValue()) >=  0)
         {
-            transfer.setAmount(amount);
-            transfer.setCurrency(currency);
-            transfer.setSender(from);
-            transfer.setReciever(to);
             transferRepository.save(transfer);
             return true;
         }
@@ -36,16 +43,25 @@ public class TransferService {
 
     }
 
-    Boolean sendOnExactelyTime(Account from, Account to,BigDecimal amount,Date postDate)
+    public Boolean sendOnExactelyTime(Account from, Account to,BigDecimal amount,Date postDate)
     {
-        if((account.getBilance().doubleValue() - amount.doubleValue()) >= 0) {
-            transfer.setAmount(amount);
-            transfer.setSender(from);
-            transfer.setReciever(to);
-            transfer.setPost_date(postDate);
+        transfer = new Transfer();
+        account = new Account();
+
+        transfer.setAmount(amount);
+        transfer.setSender(from);
+        transfer.setReciever(to);
+        transfer.setPost_date(postDate);
+
+        if(amount.doubleValue() <= 0)
+            return false;
+
+        if((from.getBilance().doubleValue() - amount.doubleValue()) >0) {
+            transferRepository.save(transfer);
             return true;
         }
-        else return false;
+        else
+            return false;
 
     }
 

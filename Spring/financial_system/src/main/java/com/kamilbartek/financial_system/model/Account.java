@@ -11,7 +11,7 @@ public class Account {
         private long id;
 
         private BigDecimal bilance;
-
+        private String currency;
         @Temporal(TemporalType.DATE)
         Date account_creation_date;
 
@@ -49,5 +49,13 @@ public class Account {
 
         public void setAccount_creation_date(Date account_creation_date) {
                 this.account_creation_date = account_creation_date;
+        }
+
+        public String getCurrency() {
+        return currency;
+    }
+
+        public void setCurrency(String currency) {
+            this.currency = currency;
         }
 }

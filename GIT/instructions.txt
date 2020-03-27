@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/8508861/two-people-working-on-a-file-at-the-same-time-in-git
