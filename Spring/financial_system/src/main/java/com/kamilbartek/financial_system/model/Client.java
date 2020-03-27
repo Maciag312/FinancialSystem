@@ -34,6 +34,7 @@ public class Client {
     private String getClientInfo(){
         return ""; 
     }
+
     @Temporal(TemporalType.DATE)
     Date account_creation_date;
 
