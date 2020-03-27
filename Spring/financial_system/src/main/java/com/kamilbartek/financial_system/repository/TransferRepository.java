@@ -5,8 +5,9 @@ import java.util.List;
 import com.kamilbartek.financial_system.model.Account;
 import com.kamilbartek.financial_system.model.Transfer;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public interface TransferRepository extends CrudRepository<Transfer, Long> {
     List<Transfer> findBySenderId(String lastName);
     Transfer findById(Account id);

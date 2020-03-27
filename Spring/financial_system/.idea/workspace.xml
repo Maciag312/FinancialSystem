@@ -2,8 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="419b78e5-42ec-4697-baad-3a367fa4590e" name="Default Changelist" comment="spring account client and transfer">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/service/ClientService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/FinancialSystemApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/FinancialSystemApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/model/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/model/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/repository/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/repository/AccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/repository/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/repository/ClientRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/repository/TransferRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/repository/TransferRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/service/TransferService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/service/TransferService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +89,7 @@
       <workItem from="1584904541385" duration="174000" />
       <workItem from="1584905869910" duration="1522000" />
       <workItem from="1584907418965" duration="16000" />
-      <workItem from="1584907578116" duration="13718000" />
+      <workItem from="1584907578116" duration="20462000" />
     </task>
     <task id="LOCAL-00001" summary="spring account client and transfer">
       <created>1584478254377</created>
