@@ -13,7 +13,7 @@ public class Account {
         private BigDecimal bilance;
         private String currency;
         @Temporal(TemporalType.DATE)
-        Date account_creation_date;
+        private Date account_creation_date;
 
 
         @OneToOne(cascade = CascadeType.ALL)
