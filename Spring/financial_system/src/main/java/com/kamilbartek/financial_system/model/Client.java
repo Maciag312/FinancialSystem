@@ -9,7 +9,7 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private long id;
+    private long clientId;
 
     private String username;
 
@@ -47,12 +47,12 @@ public class Client {
     public Client() {
     }
 
-    public long getId() {
-        return id;
+    public long getClientId() {
+        return clientId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
     public String getUsername() {

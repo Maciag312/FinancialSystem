@@ -3,7 +3,7 @@ package com.kamilbartek.financial_system.jsons;
 import java.util.Date;
 
 public class ClientJSON {
-    public long id;
+    public long clientId;
 
     public String username;
 

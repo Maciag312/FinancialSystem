@@ -15,11 +15,12 @@ public class ClientService {
     private ClientRepository clientRepository;
     Client client;
     private Client getClientInfo(){
-        return clientRepository.findById(client.getId());
+        return clientRepository.findById(client.getClientId());
     }
     public Boolean newClient(String name, String surename, String username,String password, String phone_number,String adress, String country,String identity_card_number, Date date_of_birth, String email_address)
     {
-     client = new Client();
+    client = new Client();
+    client.getClientId();
     client.setName(name);
     client.setSurname(surename);
     client.setUsername(username);

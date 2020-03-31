@@ -8,7 +8,7 @@ import java.util.Date;
 public class Account {
         @Id
         @GeneratedValue(strategy= GenerationType.AUTO)
-        private long id;
+        private long accountId;
 
         private BigDecimal bilance;
         private String currency;
@@ -20,14 +20,15 @@ public class Account {
         @JoinColumn(name = "client_id", referencedColumnName = "id")
         private Client client;
 
-        public void setId(long id) {
-            this.id = id;
-        }
-        public long getId() {
-        return id;
+    public void setAccountId(long accountId) {
+        this.accountId = accountId;
     }
 
-        public BigDecimal getBilance() {
+    public long getAccountId() {
+        return accountId;
+    }
+
+    public BigDecimal getBilance() {
                 return bilance;
         }
 
