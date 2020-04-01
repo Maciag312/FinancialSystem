@@ -5,10 +5,10 @@ import java.util.List;
 
 public class TransferJSON
 {
-    private Long sender_account_id;
-    private Long reciever_account_id;
-    private double amount;
-    private String currency;
+    public Long sender_account_id;
+    public Long reciever_account_id;
+    public double amount;
+    public String currency;
 
 
     public void setSender_account_id(Long sender_account_id) {

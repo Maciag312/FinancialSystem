@@ -19,7 +19,6 @@ public class AccountService {
     Account newAccount;
     public Boolean createAccount(Date account_creation_date, String currency)
     {
-
     newAccount = new Account();
     newAccount.getAccountId();
     newAccount.setClient(new Client());
