@@ -1,6 +1,7 @@
 package com.kamilbartek.financial_system.controller;
 
 
+import com.kamilbartek.financial_system.jsons.BilanceInfoJSON;
 import com.kamilbartek.financial_system.jsons.ClientJSON;
 import com.kamilbartek.financial_system.jsons.TransferJSON;
 import com.kamilbartek.financial_system.model.Account;
@@ -20,6 +21,9 @@ public class mainController {
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    ClientRepository clientRepository;
 
     @Autowired
     ClientService clientService;
@@ -44,6 +48,27 @@ public class mainController {
     @PostMapping("/createClient")
     public boolean createClient(@RequestBody ClientJSON clientJSON){
         return clientService.newClient(clientJSON.name,clientJSON.surname,clientJSON.username,clientJSON.password,clientJSON.phone_number,clientJSON.address,clientJSON.country,clientJSON.identity_card_number,clientJSON.date_of_birth,clientJSON.email_address);
+    }
+
+    @PostMapping("/createAccount/{client_id}/{currency}")
+    public boolean createAccount(@PathVariable Long client_id, @PathVariable String currency){
+        Client client = clientRepository.findById(client_id).orElse(null);
+        if(client==null) return false;
+        return clientService.createAccount(client, currency);
+    }
+
+    @GetMapping("/getBilanceInfo/{account_id}")
+    public BilanceInfoJSON getBilanceInfo(@PathVariable Long account_id){
+        BilanceInfoJSON bilanceInfoJSON = new BilanceInfoJSON();
+
+        Account account = accountRepository.findById(account_id).orElse(null);
+        if(account==null) return bilanceInfoJSON;
+        bilanceInfoJSON.name = account.getClient().getName();
+        bilanceInfoJSON.surname = account.getClient().getSurname();
+        bilanceInfoJSON.currentBilance = account.getBilance().longValue();
+        bilanceInfoJSON.recentTenTransfers = accountService.getNLastTransfers()
+
+
     }
 
 }
