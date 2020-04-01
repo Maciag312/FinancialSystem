@@ -16,8 +16,10 @@ public class Transfer {
 
     private String currency;
 
+    @ManyToOne
     private Account sender;
 
+    @ManyToOne
     private Account reciever;
 
     public long getId() {

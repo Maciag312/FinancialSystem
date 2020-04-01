@@ -5,15 +5,17 @@ import com.kamilbartek.financial_system.jsons.BilanceInfoJSON;
 import com.kamilbartek.financial_system.jsons.ClientJSON;
 import com.kamilbartek.financial_system.jsons.TransferJSON;
 import com.kamilbartek.financial_system.model.Account;
-import com.kamilbartek.financial_system.model.Client;
+import com.kamilbartek.financial_system.model.User;
 import com.kamilbartek.financial_system.repository.AccountRepository;
-import com.kamilbartek.financial_system.repository.ClientRepository;
-import com.kamilbartek.financial_system.service.ClientService;
+import com.kamilbartek.financial_system.repository.UserRepository;
+import com.kamilbartek.financial_system.service.AccountService;
 import com.kamilbartek.financial_system.service.TransferService;
+import com.kamilbartek.financial_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 public class mainController {
@@ -23,10 +25,15 @@ public class mainController {
     AccountRepository accountRepository;
 
     @Autowired
-    ClientRepository clientRepository;
+    UserRepository userRepository;
 
     @Autowired
-    ClientService clientService;
+    UserService userSerivce;
+
+
+    @Autowired
+    AccountService accountService;
+
 
     @Autowired
     TransferService transferService;
@@ -45,16 +52,22 @@ public class mainController {
         return transferService.send(account_from, account_to, BigDecimal.valueOf(transferJSON.amount), transferJSON.currency);
     }
 
-    @PostMapping("/createClient")
+    @PostMapping(value = "/createClient", consumes = "application/json")
     public boolean createClient(@RequestBody ClientJSON clientJSON){
-        return clientService.newClient(clientJSON.name,clientJSON.surname,clientJSON.username,clientJSON.password,clientJSON.phone_number,clientJSON.address,clientJSON.country,clientJSON.identity_card_number,clientJSON.date_of_birth,clientJSON.email_address);
+        return userSerivce.createUser(clientJSON.username,clientJSON.password,clientJSON.name,clientJSON.surname,clientJSON.phone_number,clientJSON.address,clientJSON.country,clientJSON.identity_card_number,clientJSON.date_of_birth,clientJSON.email_address);
     }
 
-    @PostMapping("/createAccount/{client_id}/{currency}")
-    public boolean createAccount(@PathVariable Long client_id, @PathVariable String currency){
-        Client client = clientRepository.findById(client_id).orElse(null);
+    @PostMapping("/createAccount/{user_id}/{currency}")
+    public boolean createAccount(@PathVariable Long user_id, @PathVariable String currency){
+        User client = userRepository.findById(user_id).orElse(null);
         if(client==null) return false;
-        return clientService.createAccount(client, currency);
+        return accountService.createAccount(client, currency);
+    }
+
+
+    @GetMapping("/getUsers")
+    public List<User> getUsers(){
+       return userRepository.findAll();
     }
 
     @GetMapping("/getBilanceInfo/{account_id}")
@@ -63,12 +76,11 @@ public class mainController {
 
         Account account = accountRepository.findById(account_id).orElse(null);
         if(account==null) return bilanceInfoJSON;
-        bilanceInfoJSON.name = account.getClient().getName();
-        bilanceInfoJSON.surname = account.getClient().getSurname();
+        bilanceInfoJSON.name = account.getUser().getName();
+        bilanceInfoJSON.surname = account.getUser().getSurname();
         bilanceInfoJSON.currentBilance = account.getBilance().longValue();
-        bilanceInfoJSON.recentTenTransfers = accountService.getNLastTransfers()
-
-
+        //bilanceInfoJSON.recentTenTransfers = accountService.getNLastTransfers(10, Client client)
+        return bilanceInfoJSON;
     }
 
 }

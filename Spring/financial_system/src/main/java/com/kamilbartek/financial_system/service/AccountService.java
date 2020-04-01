@@ -1,11 +1,14 @@
 package com.kamilbartek.financial_system.service;
 
 import com.kamilbartek.financial_system.model.Account;
-import com.kamilbartek.financial_system.model.Client;
+import com.kamilbartek.financial_system.model.User;
 import com.kamilbartek.financial_system.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 @Service
@@ -13,14 +16,13 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    Account newAccount;
-    Boolean createAccount(Date account_creation_date, String currency)
+    public Boolean createAccount(User user, String currency)
     {
-    newAccount = new Account();
-    newAccount.setClient(new Client());
-    newAccount.setBilance(null);
-    newAccount.setAccount_creation_date(account_creation_date);
-    newAccount.setCurrency(currency);
+        Account newAccount = new Account();
+        newAccount.setUser(user);
+        newAccount.setBilance(BigDecimal.ZERO);
+        newAccount.setAccount_creation_date(Calendar.getInstance().getTime());
+        newAccount.setCurrency(currency);
         return true;
 
     }
