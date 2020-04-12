@@ -12,6 +12,7 @@ import com.kamilbartek.financial_system.service.AccountService;
 import com.kamilbartek.financial_system.service.TransferService;
 import com.kamilbartek.financial_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -39,8 +40,8 @@ public class mainController {
     TransferService transferService;
 
     @GetMapping("/greeting")
-    public String greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return "Greetings " + name + " !";
+    public String greeting(@RequestParam(value = "name", defaultValue = "World") String name, Authentication authentication) {
+        return "Greetings " + authentication.getName() + name + " !";
     }
 
 
