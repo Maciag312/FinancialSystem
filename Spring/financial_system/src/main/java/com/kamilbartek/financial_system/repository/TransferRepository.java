@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TransferRepository extends CrudRepository<Transfer, Long> {
-    List<Transfer> findBySenderId(String lastName);
-    Transfer findById(Account id);
+   List<Transfer> findAllBySender(Account account);
+   List<Transfer> findAllByReciever(Account account);
 
 
 }

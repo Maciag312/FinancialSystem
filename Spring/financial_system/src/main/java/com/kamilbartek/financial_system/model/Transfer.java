@@ -16,9 +16,12 @@ public class Transfer {
     private BigDecimal amount;
 
     private String currency;
-    @OneToOne
+
+
+    @ManyToOne
     private Account sender;
-    @OneToOne
+
+    @ManyToOne
     private Account reciever;
 
     public long getTransferId() {
