@@ -5,11 +5,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity(name = "Account")
+@Table(name = "account")
 public class Account {
         @Id
         @GeneratedValue(strategy= GenerationType.AUTO)
-        private long id;
+        private long accountId;
 
         private BigDecimal bilance;
         private String currency;
@@ -23,18 +24,19 @@ public class Account {
         private List<Transfer> sent_transfers;
 
 
-        @OneToOne(cascade = CascadeType.ALL)
-        @JoinColumn(name = "user_id", referencedColumnName = "id")
+        @OneToOne(mappedBy = "account", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
         private User user;
 
-        public void setId(long id) {
-            this.id = id;
-        }
-        public long getId() {
-        return id;
+    public void setAccountId(long accountId) {
+        this.accountId = accountId;
     }
 
-        public BigDecimal getBilance() {
+    public long getAccountId() {
+        return accountId;
+    }
+
+    public BigDecimal getBilance() {
                 return bilance;
         }
 

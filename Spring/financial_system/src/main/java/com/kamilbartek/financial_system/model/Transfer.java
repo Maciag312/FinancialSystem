@@ -9,12 +9,14 @@ import java.util.Date;
 @Entity
 public class Transfer {
     @Id
+
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private long id;
+    private long transferId;
 
     private BigDecimal amount;
 
     private String currency;
+
 
     @ManyToOne
     private Account sender;
@@ -22,12 +24,12 @@ public class Transfer {
     @ManyToOne
     private Account reciever;
 
-    public long getId() {
-        return id;
+    public long getTransferId() {
+        return transferId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setTransferId(long transferId) {
+        this.transferId = transferId;
     }
 
     public BigDecimal getAmount() {

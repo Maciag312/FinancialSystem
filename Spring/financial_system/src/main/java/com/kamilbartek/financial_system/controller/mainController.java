@@ -49,7 +49,7 @@ public class mainController {
     public boolean transfer(@RequestBody TransferJSON transferJSON){
         Account account_from = accountRepository.findById(transferJSON.sender_account_id).orElse(null);
         Account account_to = accountRepository.findById(transferJSON.reciever_account_id).orElse(null);
-        if(account_from!=null||account_to!=null) return false;
+        if(account_from==null||account_to==null) return false;
         return transferService.send(account_from, account_to, BigDecimal.valueOf(transferJSON.amount), transferJSON.currency);
     }
 
@@ -71,6 +71,11 @@ public class mainController {
        return userRepository.findAll();
     }
 
+    @GetMapping("/getAccounts")
+    public List<Account> getAccounts(){
+        return accountRepository.findAll();
+    }
+
     @GetMapping("/getBilanceInfo/{account_id}")
     public BilanceInfoJSON getBilanceInfo(@PathVariable Long account_id){
         BilanceInfoJSON bilanceInfoJSON = new BilanceInfoJSON();
@@ -83,5 +88,7 @@ public class mainController {
         //bilanceInfoJSON.recentTenTransfers = accountService.getNLastTransfers(10, Client client)
         return bilanceInfoJSON;
     }
+
+
 
 }

@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity(name = "User")
+@Table(name = "user")
 public class User implements UserDetails {
 
     @Id
@@ -53,7 +54,8 @@ public class User implements UserDetails {
     @Temporal(TemporalType.DATE)
     Date account_creation_date;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
     private Account account;
 
 
@@ -86,6 +88,7 @@ public class User implements UserDetails {
         this.credentialsNonExpired = true;
         this.enabled = true;
     }
+
 
 
 

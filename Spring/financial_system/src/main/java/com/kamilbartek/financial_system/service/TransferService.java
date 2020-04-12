@@ -2,14 +2,19 @@ package com.kamilbartek.financial_system.service;
 
 
 import com.kamilbartek.financial_system.Cash;
+import com.kamilbartek.financial_system.jsons.TransferJSON;
 import com.kamilbartek.financial_system.model.Account;
 import com.kamilbartek.financial_system.model.Transfer;
+import com.kamilbartek.financial_system.repository.AccountRepository;
 import com.kamilbartek.financial_system.repository.TransferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @Service
@@ -18,12 +23,17 @@ public class TransferService {
     @Autowired
     private TransferRepository transferRepository;
 
+
+    @Autowired
+    private AccountRepository accountRepository;
+
     Transfer transfer;
     Account account ;
+
     public Boolean send(Account from, Account to, BigDecimal amount, String currency)
     {
+        // wejsc do account od from i od to i dodac/usunac kwote wyslana
         transfer = new Transfer();
-        account = new Account();
 
         transfer.setSender(from);
         transfer.setReciever(to);
@@ -36,6 +46,14 @@ public class TransferService {
         if((from.getBilance().doubleValue() - amount.doubleValue()) >=  0)
         {
             transferRepository.save(transfer);
+
+            from.setBilance(from.getBilance().subtract(amount));
+
+            to.setBilance(to.getBilance().add(amount));
+
+            accountRepository.save(from);
+            accountRepository.save(to);
+
             return true;
         }
         else
@@ -43,7 +61,7 @@ public class TransferService {
 
     }
 
-    public Boolean sendOnExactelyTime(Account from, Account to,BigDecimal amount,Date postDate)
+    public Boolean sendOnExactelyTime(Account from, Account to,BigDecimal amount,Date postDate,Date recieveDate)
     {
         transfer = new Transfer();
         account = new Account();
@@ -52,6 +70,7 @@ public class TransferService {
         transfer.setSender(from);
         transfer.setReciever(to);
         transfer.setPost_date(postDate);
+        transfer.setRecieve_date(recieveDate);
 
         if(amount.doubleValue() <= 0)
             return false;
@@ -64,5 +83,6 @@ public class TransferService {
             return false;
 
     }
+
 
 }
