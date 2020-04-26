@@ -5,6 +5,6 @@ import java.util.List;
 public class BilanceInfoJSON {
     public String name;
     public String surname;
-    public Long currentBilance;
-    public List<TransferJSON> recentTenTransfers;
+    public Double currentBilance;
+    public String currency;
 }

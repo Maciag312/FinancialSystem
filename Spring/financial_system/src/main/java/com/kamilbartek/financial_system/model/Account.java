@@ -1,5 +1,7 @@
 package com.kamilbartek.financial_system.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -8,25 +10,26 @@ import java.util.List;
 @Entity(name = "Account")
 @Table(name = "account")
 public class Account {
-        @Id
-        @GeneratedValue(strategy= GenerationType.AUTO)
-        private long accountId;
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private long accountId;
 
-        private BigDecimal bilance;
-        private String currency;
-        @Temporal(TemporalType.DATE)
-        private Date account_creation_date;
+    private BigDecimal bilance;
+    private String currency;
+    @Temporal(TemporalType.DATE)
+    private Date account_creation_date;
 
-        @OneToMany(mappedBy="reciever")
-        private List<Transfer> incoming_transfers;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "sender_id")
+    private List<Transfer> incoming_transfers;
 
-        @OneToMany(mappedBy="sender")
-        private List<Transfer> sent_transfers;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "reciever_id")
+    private List<Transfer> sent_transfers;
 
-
-        @OneToOne(mappedBy = "account", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, optional = false)
-        private User user;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     public void setAccountId(long accountId) {
         this.accountId = accountId;

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import java.math.BigDecimal;
@@ -39,8 +40,9 @@ public class TransferService {
         transfer.setReciever(to);
         transfer.setAmount(amount);
         transfer.setCurrency(currency);
-
-        if(amount.doubleValue() < 0)
+        transfer.setRecieve_date(Calendar.getInstance().getTime());
+        transfer.setPost_date(Calendar.getInstance().getTime());
+        if(amount.doubleValue() <= 0)
             return false;
 
         if((from.getBilance().doubleValue() - amount.doubleValue()) >=  0)
@@ -50,7 +52,6 @@ public class TransferService {
             from.setBilance(from.getBilance().subtract(amount));
 
             to.setBilance(to.getBilance().add(amount));
-
             accountRepository.save(from);
             accountRepository.save(to);
 

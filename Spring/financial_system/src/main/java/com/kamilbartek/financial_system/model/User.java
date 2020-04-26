@@ -54,9 +54,9 @@ public class User implements UserDetails {
     @Temporal(TemporalType.DATE)
     Date account_creation_date;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_user")
+    private List<Account> accounts;
 
 
 
@@ -159,12 +159,12 @@ public class User implements UserDetails {
         this.account_creation_date = account_creation_date;
     }
 
-    public Account getAccount() {
-        return account;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
 

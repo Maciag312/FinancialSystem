@@ -22,15 +22,22 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+
+    @Autowired
+    private AccountService accountService;
+
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     public boolean createUser(String username, String password, String name, String surname, String phone_number, String address, String country, String identity_card_number, Date date_of_birth, String email_address){
+        if(userRepository.findByUsername(username).isPresent()) return false;
         User user = new User(username,passwordEncoder.encode(password),name,surname,phone_number,address,country,identity_card_number,date_of_birth,email_address);
         user.grantAuthority(Role.USER);
         Logger logger = LoggerFactory.getLogger(Service.class);
         logger.info(user.toString());
         userRepository.save(user);
+        accountService.createAccount(userRepository.findByUsername(username).get(), "PLN");
         return true;
     }
 

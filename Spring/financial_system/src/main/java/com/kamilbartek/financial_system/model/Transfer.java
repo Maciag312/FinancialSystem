@@ -18,10 +18,12 @@ public class Transfer {
     private String currency;
 
 
-    @ManyToOne
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Account sender;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Account reciever;
 
     public long getTransferId() {
@@ -80,9 +82,9 @@ public class Transfer {
         this.recieve_date = recieve_date;
     }
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date post_date;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date recieve_date;
 }

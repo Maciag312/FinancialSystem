@@ -5,8 +5,10 @@ import java.util.List;
 
 public class TransferJSON
 {
-    public Long sender_account_id;
-    public Long reciever_account_id;
+    public boolean isFrom;
     public double amount;
+    public Long reciever_account_id;
+    public Long sender_account_id;
     public String currency;
+    public String postTime;
 }
