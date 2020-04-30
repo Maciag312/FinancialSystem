@@ -33,7 +33,7 @@ public class TransferService {
 
     public Boolean send(Account from, Account to, BigDecimal amount, String currency)
     {
-        // wejsc do account od from i od to i dodac/usunac kwote wyslana
+
         transfer = new Transfer();
 
         transfer.setSender(from);
@@ -52,6 +52,7 @@ public class TransferService {
             from.setBilance(from.getBilance().subtract(amount));
 
             to.setBilance(to.getBilance().add(amount));
+///
             accountRepository.save(from);
             accountRepository.save(to);
 
