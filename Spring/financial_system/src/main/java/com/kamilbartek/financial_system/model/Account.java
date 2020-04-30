@@ -1,8 +1,12 @@
 package com.kamilbartek.financial_system.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -10,9 +14,13 @@ import java.util.List;
 @Entity(name = "Account")
 @Table(name = "account")
 public class Account {
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private long accountId;
+    private Long accountId;
+
+
+    private Long uniqueId;
 
     private BigDecimal bilance;
     private String currency;
@@ -31,12 +39,22 @@ public class Account {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+
+
     public void setAccountId(long accountId) {
         this.accountId = accountId;
     }
 
-    public long getAccountId() {
+    public Long getAccountId() {
         return accountId;
+    }
+
+    public Long getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(Long uniqueId) {
+        this.uniqueId = uniqueId;
     }
 
     public BigDecimal getBilance() {

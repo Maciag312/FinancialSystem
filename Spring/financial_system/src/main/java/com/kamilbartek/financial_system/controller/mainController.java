@@ -1,6 +1,7 @@
 package com.kamilbartek.financial_system.controller;
 
 
+import com.kamilbartek.financial_system.jsons.AccountJSON;
 import com.kamilbartek.financial_system.jsons.BilanceInfoJSON;
 import com.kamilbartek.financial_system.jsons.ClientJSON;
 import com.kamilbartek.financial_system.jsons.TransferJSON;
@@ -49,40 +50,84 @@ public class mainController {
 
 
     @PostMapping("/transfer")
-    public boolean transfer(@RequestBody TransferJSON transferJSON){
+    public boolean transfer(@RequestBody TransferJSON transferJSON) {
         Account account_from = accountRepository.findById(transferJSON.sender_account_id).orElse(null);
         Account account_to = accountRepository.findById(transferJSON.reciever_account_id).orElse(null);
-        if(account_from==null||account_to==null) return false;
+        if (account_from == null || account_to == null) return false;
         return transferService.send(account_from, account_to, BigDecimal.valueOf(transferJSON.amount), transferJSON.currency);
     }
 
     @PostMapping(value = "/createClient", consumes = "application/json")
-    public boolean createClient(@RequestBody ClientJSON clientJSON){
-        return userSerivce.createUser(clientJSON.username,clientJSON.password,clientJSON.name,clientJSON.surname,clientJSON.phone_number,clientJSON.address,clientJSON.country,clientJSON.identity_card_number,clientJSON.date_of_birth,clientJSON.email_address);
+    public boolean createClient(@RequestBody ClientJSON clientJSON) {
+        return userSerivce.createUser(clientJSON.username, clientJSON.password, clientJSON.name, clientJSON.surname, clientJSON.phone_number, clientJSON.address, clientJSON.country, clientJSON.identity_card_number, clientJSON.date_of_birth, clientJSON.email_address);
     }
 
     @PostMapping("/createAccount/{user_id}/{currency}")
-    public boolean createAccount(@PathVariable Long user_id, @PathVariable String currency){
+    public boolean createAccount(@PathVariable Long user_id, @PathVariable String currency) {
         User client = userRepository.findById(user_id).orElse(null);
-        if(client==null) return false;
+        if (client == null) return false;
         return accountService.createAccount(client, currency);
     }
 
 
     @GetMapping("/getUsers")
-    public List<User> getUsers(){
-       return userRepository.findAll();
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 
     @GetMapping("/getAccounts")
-    public List<Account> getAccounts(){
+    public List<Account> getAccounts() {
         return accountRepository.findAll();
     }
 
     @GetMapping("/getNLastTransfers/{n}/{account_id}")
-    public List<TransferJSON> getNLastTransfers(@PathVariable Integer n, @PathVariable Long account_id){
+    public List<TransferJSON> getNLastTransfers(@PathVariable Integer n, @PathVariable Long account_id) {
         return accountService.getNLastTransfers(n.intValue(), account_id);
     }
+
+    @GetMapping("/isAccountAvailable/{account_id}")
+    public boolean isAccountAvailable(@PathVariable Long account_id, Authentication authentication) {
+        if (authentication.isAuthenticated())
+            return accountRepository.findByUniqueId(account_id).isPresent();
+        return false;
+    }
+
+    @GetMapping("/sufficientFunds/{amount}/{account_id}")
+    public boolean sufficientFunds(@PathVariable BigDecimal amount, @PathVariable long account_id, Authentication authentication) {
+        if (authentication.isAuthenticated()) {
+            if (authentication.getPrincipal() instanceof User) {
+                List<Account> acs = accountService.getAccountsByUser((User) authentication.getPrincipal());
+                boolean found = false;
+                for (int i = 0; i < acs.size(); i++) {
+                    if (acs.get(i).getUniqueId() == account_id) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) return false;
+                else return accountRepository.findByUniqueId(account_id).get().getBilance().subtract(amount).doubleValue() >= 0.0;
+            }
+        }
+        return false;
+    }
+
+    @GetMapping("/transfer/{amount}/{from_account_id}/{to_account_id}")
+    public boolean transfer(@PathVariable BigDecimal amount, @PathVariable Long from_account_id, @PathVariable Long to_account_id, Authentication authentication){
+        Account from = accountRepository.findByUniqueId(from_account_id).get();
+        Account to = accountRepository.findByUniqueId(to_account_id).get();
+        if(from==null||to==null) return false;
+        return transferService.send(from,to,amount,from.getCurrency());
+    }
+    @GetMapping("/getPrincipalAccounts")
+    public List<AccountJSON> getPrincipalAccounts(Authentication authentication){
+        if(authentication.isAuthenticated()){
+            if(authentication.getPrincipal() instanceof User){
+                return accountService.getUserAccounts((User)authentication.getPrincipal());
+            }
+        }
+        return null;
+    }
+
 
     Logger logger = LoggerFactory.getLogger(mainController.class);
 
