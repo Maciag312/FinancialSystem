@@ -1,5 +1,6 @@
 package com.kamilbartek.financial_system.service;
 
+import com.kamilbartek.financial_system.jsons.AccountJSON;
 import com.kamilbartek.financial_system.jsons.TransferJSON;
 import com.kamilbartek.financial_system.model.Account;
 import com.kamilbartek.financial_system.model.Transfer;
@@ -34,10 +35,34 @@ public class AccountService {
         newAccount.setBilance(BigDecimal.valueOf(1000.5));
         newAccount.setAccount_creation_date(Calendar.getInstance().getTime());
         newAccount.setCurrency(currency);
+        long leftLimit = 1000000000000000L;
+        long rightLimit = 9999999999999999L;
+        long generatedLong;
+        while(true) {
+            generatedLong = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
+            if(!accountRepository.findByUniqueId(generatedLong).isPresent()) break;
+        }
+        newAccount.setUniqueId(generatedLong);
         accountRepository.save(newAccount);
 //        user.setAccounts(accountRepository.f);
         userRepository.save(user);
         return true;
+    }
+
+    public List<AccountJSON> getUserAccounts(User user){
+        List<AccountJSON> accountJSONS = new ArrayList<>();
+        List<Account> accounts = accountRepository.findAllByUser(user);
+        if(accounts.size()==0) return null;
+        else {
+            for (int i = 0; i < accounts.size(); i++) {
+                AccountJSON accountJSON = new AccountJSON();
+                accountJSON.bilance = accounts.get(i).getBilance();
+                accountJSON.currency = accounts.get(i).getCurrency();
+                accountJSON.unique_id = accounts.get(i).getUniqueId();
+                accountJSONS.add(accountJSON);
+            }
+            return accountJSONS;
+        }
     }
 
     @Autowired

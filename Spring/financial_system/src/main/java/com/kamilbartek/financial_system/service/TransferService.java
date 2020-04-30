@@ -51,8 +51,10 @@ public class TransferService {
 
             from.setBilance(from.getBilance().subtract(amount));
 
+            // 1. Exchange office get Instance
+            // 2. to.getBilnace().add(office.exchange(amount, currencyFrom, currencyTo));
             to.setBilance(to.getBilance().add(amount));
-///
+
             accountRepository.save(from);
             accountRepository.save(to);
 
