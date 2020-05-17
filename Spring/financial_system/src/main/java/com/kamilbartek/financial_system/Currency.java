@@ -5,6 +5,11 @@ import java.math.BigDecimal;
 public class Currency {
     private String currencyName;
     private BigDecimal currencyValue;
+    private String base = "EUR";
+
+    public String getBase() {
+        return base;
+    }
 
     public Currency(){}
 
