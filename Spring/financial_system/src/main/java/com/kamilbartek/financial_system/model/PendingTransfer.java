@@ -1,13 +1,11 @@
 package com.kamilbartek.financial_system.model;
 
-import com.kamilbartek.financial_system.Cash;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-public class Transfer {
+public class PendingTransfer {
     @Id
 
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -18,6 +16,7 @@ public class Transfer {
     private String currency;
 
 
+    private String code;
 
     private boolean isSent = false;
 
@@ -95,7 +94,13 @@ public class Transfer {
         return creation_time;
     }
 
+    public String getCode() {
+        return code;
+    }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public void setCreation_time(Date creation_time) {
         this.creation_time = creation_time;

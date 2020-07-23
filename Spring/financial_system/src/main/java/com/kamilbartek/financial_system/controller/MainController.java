@@ -1,16 +1,13 @@
 package com.kamilbartek.financial_system.controller;
 
 
-import com.kamilbartek.financial_system.jsons.AccountJSON;
-import com.kamilbartek.financial_system.jsons.BilanceInfoJSON;
-import com.kamilbartek.financial_system.jsons.ClientJSON;
-import com.kamilbartek.financial_system.jsons.TransferJSON;
+import com.kamilbartek.financial_system.jsons.*;
 import com.kamilbartek.financial_system.model.Account;
-import com.kamilbartek.financial_system.model.Transfer;
 import com.kamilbartek.financial_system.model.User;
 import com.kamilbartek.financial_system.repository.AccountRepository;
 import com.kamilbartek.financial_system.repository.UserRepository;
 import com.kamilbartek.financial_system.service.AccountService;
+import com.kamilbartek.financial_system.service.InternalExchangeOffice;
 import com.kamilbartek.financial_system.service.TransferService;
 import com.kamilbartek.financial_system.service.UserService;
 import org.slf4j.Logger;
@@ -19,11 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-public class mainController {
+public class MainController {
 
 
     @Autowired
@@ -43,19 +43,25 @@ public class mainController {
     @Autowired
     TransferService transferService;
 
+    @Autowired
+    InternalExchangeOffice internalExchangeOffice;
+
+
     @GetMapping("/greeting")
     public String greeting(@RequestParam(value = "name", defaultValue = "World") String name, Authentication authentication) {
         return "Greetings " + authentication.getName() + name + " !";
     }
 
 
-    @PostMapping("/transfer")
-    public boolean transfer(@RequestBody TransferJSON transferJSON) {
+    @PostMapping("/createTransferAndPassCode")
+    public boolean createTransferAndPassCode(@RequestBody TransferJSON transferJSON) {
         Account account_from = accountRepository.findById(transferJSON.sender_account_id).orElse(null);
         Account account_to = accountRepository.findById(transferJSON.reciever_account_id).orElse(null);
         if (account_from == null || account_to == null) return false;
-        return transferService.send(account_from, account_to, BigDecimal.valueOf(transferJSON.amount), transferJSON.currency);
+        return transferService.createTransferAndPassCode(account_from, account_to, BigDecimal.valueOf(transferJSON.amount), transferJSON.currency);
     }
+
+
 
     @PostMapping(value = "/createClient", consumes = "application/json")
     public boolean createClient(@RequestBody ClientJSON clientJSON) {
@@ -111,13 +117,22 @@ public class mainController {
         return false;
     }
 
-    @GetMapping("/transfer/{amount}/{from_account_id}/{to_account_id}")
+    @GetMapping("/createTransferAndPassCode/{amount}/{from_account_id}/{to_account_id}")
     public boolean transfer(@PathVariable BigDecimal amount, @PathVariable Long from_account_id, @PathVariable Long to_account_id, Authentication authentication){
         Account from = accountRepository.findByUniqueId(from_account_id).get();
         Account to = accountRepository.findByUniqueId(to_account_id).get();
         if(from==null||to==null) return false;
-        return transferService.send(from,to,amount,from.getCurrency());
+        return transferService.createTransferAndPassCode(from,to,amount,from.getCurrency());
     }
+    @GetMapping("/validateCodeAndSendTransfer/{code}/{from_account_id}/{to_account_id}")
+    public boolean validateCodeAndSendTransfer(@PathVariable String code, @PathVariable Long from_account_id, @PathVariable Long to_account_id, Authentication authentication){
+        Account from = accountRepository.findByUniqueId(from_account_id).get();
+        Account to = accountRepository.findByUniqueId(to_account_id).get();
+        if(from==null||to==null) return false;
+        return transferService.validateCodeAndSendTransfer(code, from,to);
+    }
+
+
     @GetMapping("/getPrincipalAccounts")
     public List<AccountJSON> getPrincipalAccounts(Authentication authentication){
         if(authentication.isAuthenticated()){
@@ -129,7 +144,7 @@ public class mainController {
     }
 
 
-    Logger logger = LoggerFactory.getLogger(mainController.class);
+    Logger logger = LoggerFactory.getLogger(MainController.class);
 
 
     @GetMapping("/getBilanceInfo/{account_id}")
@@ -193,6 +208,28 @@ public class mainController {
             return null;
         }
 
+    }
+
+    @GetMapping("/getCurrencies/{currency}")
+    public List<CurrencyJSON> getCurrencies(@PathVariable String currency)
+    {
+        try {
+            internalExchangeOffice.updateRates(currency);
+        } catch(IOException i){
+            System.out.println("Currencies exceptions" + i);
+        }
+        List<CurrencyJSON> CurrencyJSONS = new ArrayList<>();
+        for (Map.Entry<String,BigDecimal> cur: internalExchangeOffice.getRates().getRates().entrySet()) {
+
+            CurrencyJSON currencyJSON = new CurrencyJSON();
+
+            currencyJSON.name = cur.getKey();
+            currencyJSON.value = cur.getValue().doubleValue();
+
+            CurrencyJSONS.add(currencyJSON);
+
+        }
+        return CurrencyJSONS;
     }
 
 }

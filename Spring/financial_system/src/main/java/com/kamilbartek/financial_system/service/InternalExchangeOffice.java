@@ -7,6 +7,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kamilbartek.financial_system.Currency;
 import com.kamilbartek.financial_system.Rates;
+import org.springframework.stereotype.Service;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,23 +21,24 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
+@Service
 public class InternalExchangeOffice {
 
     private static final InternalExchangeOffice exchangeInstance = null;
 
     private Rates rates;
 
-    public boolean updateRates() throws IOException {
+    public boolean updateRates(String base) throws IOException {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
         Calendar calendarObj = Calendar.getInstance();
 
-        URL url = new URL("https://api.exchangeratesapi.io/latest");
+        URL url = new URL("https://api.exchangeratesapi.io/latest?base="+base+"&date="+dateFormat.format(calendarObj.getTime()));
         String readLine = null;
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
-        connection.setRequestProperty("base", "EUR");
-        connection.setRequestProperty("date", dateFormat.format(calendarObj.getTime()));
+//        connection.setRequestProperty("base",base);
+//        connection.setRequestProperty("date", dateFormat.format(calendarObj.getTime()));
         int responseCode = connection.getResponseCode();
 
 
@@ -69,6 +72,7 @@ public class InternalExchangeOffice {
                 rates.addRate("GBP", BigDecimal.valueOf(jobRates.get("GBP").getAsDouble()));
                 rates.addRate("JPY", BigDecimal.valueOf(jobRates.get("JPY").getAsDouble()));
                 rates.addRate("CHF", BigDecimal.valueOf(jobRates.get("CHF").getAsDouble()));
+                rates.addRate("EUR", BigDecimal.valueOf(jobRates.get("CHF").getAsDouble()));
 
                 BigDecimal PLN = rates.getRates().get("PLN");
                 BigDecimal USD = rates.getRates().get("USD");
@@ -76,6 +80,7 @@ public class InternalExchangeOffice {
                 BigDecimal GBP = rates.getRates().get("GBP");
                 BigDecimal JPY = rates.getRates().get("JPY");
                 BigDecimal CHF = rates.getRates().get("PLN");
+                BigDecimal EUR = rates.getRates().get("EUR");
 
                 System.out.println(rates.getRates().get("USD"));
 
@@ -95,7 +100,7 @@ public class InternalExchangeOffice {
         return value.multiply(exchangeRate(currencyFrom,currencyTo));
     }
     public BigDecimal exchangeRate(String currencyFrom, String currencyTo) throws IOException {
-        updateRates();
+        updateRates("EUR");
         BigDecimal CurrencyFrom = rates.getRates().get(currencyFrom);
         BigDecimal CurrencyTo = rates.getRates().get(currencyTo);
         if (CurrencyTo != BigDecimal.ZERO || CurrencyFrom != BigDecimal.ZERO) {
@@ -114,7 +119,7 @@ public class InternalExchangeOffice {
     }
 
     public InternalExchangeOffice() throws IOException {
-        updateRates();
+        updateRates("EUR");
     }
     public static InternalExchangeOffice getInstance() throws IOException {
         if (exchangeInstance == null){

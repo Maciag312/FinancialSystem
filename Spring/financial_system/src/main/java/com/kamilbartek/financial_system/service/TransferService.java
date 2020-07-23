@@ -4,18 +4,17 @@ package com.kamilbartek.financial_system.service;
 import com.kamilbartek.financial_system.Cash;
 import com.kamilbartek.financial_system.jsons.TransferJSON;
 import com.kamilbartek.financial_system.model.Account;
+import com.kamilbartek.financial_system.model.PendingTransfer;
 import com.kamilbartek.financial_system.model.Transfer;
 import com.kamilbartek.financial_system.repository.AccountRepository;
+import com.kamilbartek.financial_system.repository.PendingTransferRepository;
 import com.kamilbartek.financial_system.repository.TransferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 
 @Service
@@ -24,36 +23,72 @@ public class TransferService {
     @Autowired
     private TransferRepository transferRepository;
 
+    @Autowired
+    private PendingTransferRepository pendingTransferRepository;
+
+    @Autowired
+    EmailService emailService;
+
+
 
     @Autowired
     private AccountRepository accountRepository;
 
-    Transfer transfer;
-    Account account ;
 
-    public Boolean send(Account from, Account to, BigDecimal amount, String currency)
-    {
+    public Boolean createTransferAndPassCode(Account from, Account to, BigDecimal amount, String currency){
+        PendingTransfer pendingTransfer = new PendingTransfer();
 
-        transfer = new Transfer();
+        pendingTransfer.setSender(from);
+        pendingTransfer.setReciever(to);
+        pendingTransfer.setAmount(amount);
+        pendingTransfer.setCurrency(currency);
+        pendingTransfer.setRecieve_date(Calendar.getInstance().getTime());
+        pendingTransfer.setPost_date(Calendar.getInstance().getTime());
 
-        transfer.setSender(from);
-        transfer.setReciever(to);
-        transfer.setAmount(amount);
-        transfer.setCurrency(currency);
-        transfer.setRecieve_date(Calendar.getInstance().getTime());
-        transfer.setPost_date(Calendar.getInstance().getTime());
-        if(amount.doubleValue() <= 0)
+        pendingTransferRepository.save(pendingTransfer);
+
+        String passCode = String.valueOf(Math.random() * ( 999999 - 0));
+        while (passCode.length()!=6)
+            passCode = "0" + passCode;
+
+        pendingTransfer.setCode(passCode);
+
+        if(emailService.passCodeToUsersMail(passCode, from.getUser().getEmail_address()))
             return false;
 
-        if((from.getBilance().doubleValue() - amount.doubleValue()) >=  0)
+
+        if(pendingTransfer.getAmount().doubleValue() <= 0)
+            return false;
+
+        pendingTransferRepository.save(pendingTransfer);
+
+
+        return true;
+    }
+
+    public Boolean validateCodeAndSendTransfer(String transferCode, Account from, Account to){
+        PendingTransfer pendingTransfer = pendingTransferRepository.findByCodeAndSender(transferCode,from).orElse(null);
+        if(pendingTransfer==null)
+            return false;
+
+        Transfer transfer = new Transfer();
+
+        transfer.setAmount(pendingTransfer.getAmount());
+        transfer.setReciever(pendingTransfer.getReciever());
+        transfer.setSender(pendingTransfer.getSender());
+        transfer.setCurrency(pendingTransfer.getCurrency());
+        transfer.setCreation_time(Calendar.getInstance().getTime());
+
+        if((from.getBilance().doubleValue() - pendingTransfer.getAmount().doubleValue()) >=  0)
         {
+            transfer.setSent(true);
             transferRepository.save(transfer);
 
-            from.setBilance(from.getBilance().subtract(amount));
+            from.setBilance(from.getBilance().subtract(pendingTransfer.getAmount()));
 
             // 1. Exchange office get Instance
             // 2. to.getBilnace().add(office.exchange(amount, currencyFrom, currencyTo));
-            to.setBilance(to.getBilance().add(amount));
+            to.setBilance(to.getBilance().add(pendingTransfer.getAmount()));
 
             accountRepository.save(from);
             accountRepository.save(to);
@@ -63,30 +98,13 @@ public class TransferService {
         else
             return false;
 
-    }
 
-    public Boolean sendOnExactelyTime(Account from, Account to,BigDecimal amount,Date postDate,Date recieveDate)
-    {
-        transfer = new Transfer();
-        account = new Account();
 
-        transfer.setAmount(amount);
-        transfer.setSender(from);
-        transfer.setReciever(to);
-        transfer.setPost_date(postDate);
-        transfer.setRecieve_date(recieveDate);
-
-        if(amount.doubleValue() <= 0)
-            return false;
-
-        if((from.getBilance().doubleValue() - amount.doubleValue()) >0) {
-            transferRepository.save(transfer);
-            return true;
-        }
-        else
-            return false;
 
     }
+
+
+
 
 
 }
