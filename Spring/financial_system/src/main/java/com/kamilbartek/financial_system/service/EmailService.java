@@ -1,6 +1,7 @@
 package com.kamilbartek.financial_system.service;
 
 
+import com.kamilbartek.financial_system.Currency;
 import com.kamilbartek.financial_system.jsons.MailFeedback;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.ValidationException;
+import java.math.BigDecimal;
 
 @Service
 public class EmailService {
@@ -47,11 +49,6 @@ public class EmailService {
             throw new ValidationException("Feedback is not valid");
         }
 
-        //Tworzenie email sendera
-
-
-        // Tworzenie instancji e-maila
-
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(mailFeedback.getEmail());
         mailMessage.setTo("fake@feedback.com");
@@ -76,16 +73,30 @@ public class EmailService {
         return true;
     }
 
-    public boolean incomingTransferInfo(String recieverMail) {
+    public boolean incomingTransferInfo(String receiverMail, String senderName, String senderSurname, BigDecimal amount, String currency) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom("odNas@sprawdzenie.org"); // TODO
-        mailMessage.setTo(recieverMail);
+        mailMessage.setTo(receiverMail);
         mailMessage.setSubject("Incoming transfer");
-        mailMessage.setText("User ... has sent you a transfer ");
+        mailMessage.setText(senderName+" "+senderSurname+" wants to send you a transfer "+ amount +" "+ currency);
 
         // Wysyłanie maila
         mailSender.send(mailMessage);
 
         return true;
     }
+
+    public boolean transferStatus(String senderMail,String receiverName, String receiverSurname, BigDecimal amount, String currency) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("odNas@sprawdzenie.org"); // TODO
+        mailMessage.setTo(senderMail);
+        mailMessage.setSubject("Transfer passed successfully");
+        mailMessage.setText("Your transfer to "+receiverName+" "+receiverSurname+" of  "+amount +" "+ currency+ "has been sent successfully ");
+
+        // Wysyłanie maila
+        mailSender.send(mailMessage);
+
+        return true;
+    }
+
 }

@@ -1,8 +1,6 @@
 package com.kamilbartek.financial_system.service;
 
 
-import com.kamilbartek.financial_system.Cash;
-import com.kamilbartek.financial_system.jsons.TransferJSON;
 import com.kamilbartek.financial_system.model.Account;
 import com.kamilbartek.financial_system.model.PendingTransfer;
 import com.kamilbartek.financial_system.model.Transfer;
@@ -83,8 +81,11 @@ public class TransferService {
         {
             transfer.setSent(true);
             transferRepository.save(transfer);
+            emailService.passCodeToUsersMail(transferCode,from.getUser().getEmail_address());
+            emailService.incomingTransferInfo(to.getUser().getEmail_address(),to.getUser().getName(),to.getUser().getSurname(), pendingTransfer.getAmount(), pendingTransfer.getCurrency());
 
             from.setBilance(from.getBilance().subtract(pendingTransfer.getAmount()));
+            emailService.transferStatus(from.getUser().getEmail_address(),to.getUser().getName(),to.getUser().getSurname(),pendingTransfer.getAmount(),pendingTransfer.getCurrency());
 
             // 1. Exchange office get Instance
             // 2. to.getBilnace().add(office.exchange(amount, currencyFrom, currencyTo));
@@ -98,13 +99,6 @@ public class TransferService {
         else
             return false;
 
-
-
-
     }
-
-
-
-
 
 }
