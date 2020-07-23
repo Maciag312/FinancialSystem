@@ -10,6 +10,7 @@
       <change afterPath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/service/EmailService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/controller/mainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/model/Transfer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/model/Transfer.java" afterDir="false" />
@@ -20,6 +21,18 @@
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test API/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../test API/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test API/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../test API/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test API/src/main/java/test/api/InternalExchangeOffice.java" beforeDir="false" afterPath="$PROJECT_DIR$/../test API/src/main/java/test/api/InternalExchangeOffice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test API/src/main/java/test/api/Rates.java" beforeDir="false" afterPath="$PROJECT_DIR$/../test API/src/main/java/test/api/Rates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test API/target/classes/test/api/Currency.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test API/target/classes/test/api/InternalExchangeOffice.class" beforeDir="false" afterPath="$PROJECT_DIR$/../test API/target/classes/test/api/InternalExchangeOffice.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test API/target/classes/test/api/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../test API/target/classes/test/api/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test API/target/classes/test/api/Rates.class" beforeDir="false" afterPath="$PROJECT_DIR$/../test API/target/classes/test/api/Rates.class" afterDir="false" />
+    </list>
+>>>>>>> dfc72177a8fa57ec6b99c771c1b04a758c83e3be
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,6 +49,7 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
+<<<<<<< HEAD
     <expand>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
@@ -184,6 +198,11 @@
       </file>
     </leaf>
   </component>
+=======
+    <expand />
+    <select />
+  </component>
+>>>>>>> dfc72177a8fa57ec6b99c771c1b04a758c83e3be
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -225,6 +244,7 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
+<<<<<<< HEAD
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -449,8 +469,25 @@
       </pane>
       <pane id="Scope" />
     </panes>
+=======
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1bwRwPV3PwGyxr5KMk8wAuMD9eE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+>>>>>>> dfc72177a8fa57ec6b99c771c1b04a758c83e3be
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
@@ -463,7 +500,10 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Scala" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -476,6 +516,7 @@
       <recent name="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system" />
     </key>
   </component>
+<<<<<<< HEAD
   <component name="RestClientSettings">
     <option name="REQUEST_HISTORY">
       <list>
@@ -530,6 +571,9 @@
     <configuration name="feedback#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/requests/feedback.http">
       <method v="2" />
     </configuration>
+=======
+  <component name="RunManager">
+>>>>>>> dfc72177a8fa57ec6b99c771c1b04a758c83e3be
     <configuration name="FinancialSystemApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="financial_system" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.kamilbartek.financial_system.FinancialSystemApplication" />
@@ -571,7 +615,17 @@
       <workItem from="1585862712242" duration="688000" />
       <workItem from="1585933382951" duration="952000" />
       <workItem from="1586695605967" duration="338000" />
+<<<<<<< HEAD
       <workItem from="1595498623800" duration="6870000" />
+=======
+      <workItem from="1589541409576" duration="2836000" />
+      <workItem from="1589694940263" duration="1683000" />
+      <workItem from="1589697328479" duration="7509000" />
+      <workItem from="1589724070877" duration="26000" />
+      <workItem from="1589724113322" duration="7000" />
+      <workItem from="1593082379844" duration="2038000" />
+      <workItem from="1595364090609" duration="1605000" />
+>>>>>>> dfc72177a8fa57ec6b99c771c1b04a758c83e3be
     </task>
     <task id="LOCAL-00001" summary="spring account client and transfer">
       <created>1584478254377</created>
@@ -583,6 +637,7 @@
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
+<<<<<<< HEAD
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="52522000" />
   </component>
@@ -673,30 +728,17 @@
       <window_info anchor="right" id="Bean Validation" order="9" />
     </layout-to-restore>
   </component>
+=======
+>>>>>>> dfc72177a8fa57ec6b99c771c1b04a758c83e3be
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-              <option name="COLUMN_ORDER">
-                <list>
-                  <option value="0" />
-                  <option value="1" />
-                  <option value="2" />
-                  <option value="3" />
-                </list>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -715,11 +757,14 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="spring account client and transfer" />
     <option name="LAST_COMMIT_MESSAGE" value="spring account client and transfer" />
   </component>
+<<<<<<< HEAD
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/com/kamilbartek/financial_system/controller.java" />
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
@@ -1069,5 +1114,54 @@
         </settings>
       </state>
     </states>
+=======
+  <component name="WindowStateProjectService">
+    <state x="184" y="95" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589541734981">
+      <screen x="0" y="23" width="1440" height="823" />
+    </state>
+    <state x="184" y="95" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.823@0.23.1440.823" timestamp="1589541734981" />
+    <state x="533" y="142" key="#com.intellij.ide.util.MemberChooser" timestamp="1589542119821">
+      <screen x="0" y="23" width="1440" height="823" />
+    </state>
+    <state x="533" y="142" key="#com.intellij.ide.util.MemberChooser/0.23.1440.823@0.23.1440.823" timestamp="1589542119821" />
+    <state x="457" y="224" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1589541445685">
+      <screen x="0" y="23" width="1440" height="823" />
+    </state>
+    <state x="457" y="224" key="#com.intellij.ide.util.TreeClassChooserDialog/0.23.1440.823@0.23.1440.823" timestamp="1589541445685" />
+    <state x="334" y="130" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1589541720006">
+      <screen x="0" y="23" width="1440" height="823" />
+    </state>
+    <state x="334" y="130" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.23.1440.823@0.23.1440.823" timestamp="1589541720006" />
+    <state x="569" y="340" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1589541414862">
+      <screen x="0" y="23" width="1440" height="823" />
+    </state>
+    <state x="569" y="340" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.23.1440.823@0.23.1440.823" timestamp="1589541414862" />
+    <state width="1398" height="121" key="GridCell.Tab.0.bottom" timestamp="1589544394347">
+      <screen x="0" y="23" width="1440" height="823" />
+    </state>
+    <state width="1398" height="121" key="GridCell.Tab.0.bottom/0.23.1440.823@0.23.1440.823" timestamp="1589544394347" />
+    <state width="1398" height="121" key="GridCell.Tab.0.center" timestamp="1589544394347">
+      <screen x="0" y="23" width="1440" height="823" />
+    </state>
+    <state width="1398" height="121" key="GridCell.Tab.0.center/0.23.1440.823@0.23.1440.823" timestamp="1589544394347" />
+    <state width="1398" height="121" key="GridCell.Tab.0.left" timestamp="1589544394346">
+      <screen x="0" y="23" width="1440" height="823" />
+    </state>
+    <state width="1398" height="121" key="GridCell.Tab.0.left/0.23.1440.823@0.23.1440.823" timestamp="1589544394346" />
+    <state width="1398" height="121" key="GridCell.Tab.0.right" timestamp="1589544394347">
+      <screen x="0" y="23" width="1440" height="823" />
+    </state>
+    <state width="1398" height="121" key="GridCell.Tab.0.right/0.23.1440.823@0.23.1440.823" timestamp="1589544394347" />
+    <state x="208" y="23" width="1024" height="823" key="SettingsEditor" timestamp="1589541661591">
+      <screen x="0" y="23" width="1440" height="823" />
+    </state>
+    <state x="208" y="23" width="1024" height="823" key="SettingsEditor/0.23.1440.823@0.23.1440.823" timestamp="1589541661591" />
+    <state x="397" y="265" key="com.intellij.ide.util.TipDialog" timestamp="1593082390015">
+      <screen x="0" y="23" width="1440" height="827" />
+    </state>
+    <state x="397" y="258" key="com.intellij.ide.util.TipDialog/0.23.1440.806@0.23.1440.806" timestamp="1589694940775" />
+    <state x="397" y="259" key="com.intellij.ide.util.TipDialog/0.23.1440.808@0.23.1440.808" timestamp="1589724092014" />
+    <state x="397" y="265" key="com.intellij.ide.util.TipDialog/0.23.1440.827/1440.-191.2560.1417@0.23.1440.827" timestamp="1593082390015" />
+>>>>>>> dfc72177a8fa57ec6b99c771c1b04a758c83e3be
   </component>
 </project>
